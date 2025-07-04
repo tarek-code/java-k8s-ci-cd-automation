@@ -1,0 +1,151 @@
+{
+  "version": 4,
+  "terraform_version": "1.12.2",
+  "serial": 22,
+  "lineage": "c6e5b901-5c3e-6afc-3575-1d7ac596cf06",
+  "outputs": {
+    "ecr_repo_url": {
+      "value": "397773421037.dkr.ecr.eu-west-1.amazonaws.com/springboot-app",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "aws_ecr_repository",
+      "name": "app_repo",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ecr:eu-west-1:397773421037:repository/springboot-app",
+            "encryption_configuration": [
+              {
+                "encryption_type": "AES256",
+                "kms_key": ""
+              }
+            ],
+            "force_delete": null,
+            "id": "springboot-app",
+            "image_scanning_configuration": [
+              {
+                "scan_on_push": false
+              }
+            ],
+            "image_tag_mutability": "MUTABLE",
+            "name": "springboot-app",
+            "region": "eu-west-1",
+            "registry_id": "397773421037",
+            "repository_url": "397773421037.dkr.ecr.eu-west-1.amazonaws.com/springboot-app",
+            "tags": {},
+            "tags_all": {},
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiZGVsZXRlIjoxMjAwMDAwMDAwMDAwfX0="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_key_pair",
+      "name": "assignment_key",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:eu-west-1:397773421037:key-pair/assignment-key",
+            "fingerprint": "52:59:74:e0:d3:53:69:18:3b:f6:98:e8:dc:98:ba:e2",
+            "id": "assignment-key",
+            "key_name": "assignment-key",
+            "key_name_prefix": "",
+            "key_pair_id": "key-06af2e36eb52d694b",
+            "key_type": "rsa",
+            "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGfY7uckJsbzgLgcXJBBEpgn+2KoDn1fnnfRwzgOA0SzeUtAAlG+a0B33TglC8UhmUBIgjZO+GRlbCg8Ov7lP5DqnPgWUnyOEfSPHiIFxj5ynsjf2SmEDMKXrt2LlIkhhkX8AFyPThltDavCKfbjThacsf/ivnpobyfYhpsaofZj700A9U5r3BTEIDQ1sH+JEko0HE/FJA/AIGOqkTZfRDj3y+MpcWGkahMKMSLZN/wXDa3AB0i3bqBnZ1BltFOMmjeKI6wPeFywnVlHKAxEruqxySrPbWb0Yo9at6qDjVv25F/ZX2t8v1z1iUHf1fidJQH586RTkND8C0DbNXVXS1 unlimited@Unlimited",
+            "region": "eu-west-1",
+            "tags": {},
+            "tags_all": {}
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "k3s_sg",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:eu-west-1:397773421037:security-group/sg-0543c333beea10956",
+            "description": "Allow SSH and NodePort access",
+            "egress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 0,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "-1",
+                "security_groups": [],
+                "self": false,
+                "to_port": 0
+              }
+            ],
+            "id": "sg-0543c333beea10956",
+            "ingress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "NodePort access",
+                "from_port": 30000,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "tcp",
+                "security_groups": [],
+                "self": false,
+                "to_port": 32767
+              },
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "SSH",
+                "from_port": 22,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "tcp",
+                "security_groups": [],
+                "self": false,
+                "to_port": 22
+              }
+            ],
+            "name": "k3s-sg",
+            "name_prefix": "",
+            "owner_id": "397773421037",
+            "region": "eu-west-1",
+            "revoke_rules_on_delete": false,
+            "tags": {},
+            "tags_all": {},
+            "timeouts": null,
+            "vpc_id": "vpc-0696c28218f92ce01"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6OTAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0="
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}

@@ -1,14 +1,14 @@
 provider "aws" {
-  region = "eu-west-1"
+  region = var.aws_region
 }
 
-# مفتاح SSH علشان تقدر تدخل الـ EC2
+# SSH Key
 resource "aws_key_pair" "assignment_key" {
-  key_name   = "assignment-key"
-  public_key = file("~/.ssh/id_rsa.pub") # غيّر المسار لو المفتاح عندك في مكان تاني
+  key_name   = var.key_name
+  public_key = file(var.public_key_path)
 }
 
-# Security Group: تفتح SSH و NodePort
+# Security Group
 resource "aws_security_group" "k3s_sg" {
   name        = "k3s-sg"
   description = "Allow SSH and NodePort access"
@@ -37,31 +37,33 @@ resource "aws_security_group" "k3s_sg" {
   }
 }
 
-# EC2: Master Node
+# Master Node
 resource "aws_instance" "control_plane" {
-  ami                    = "ami-052e6b9b2e1f0c8a4" # Ubuntu 22.04 (eu-west-1)
-  instance_type          = "t2.micro"
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
   key_name               = aws_key_pair.assignment_key.key_name
   vpc_security_group_ids = [aws_security_group.k3s_sg.id]
+
   tags = {
     Name = "k3s-master"
     Role = "controlplane"
   }
 }
 
-# EC2: Worker Node
+# Worker Node
 resource "aws_instance" "worker" {
-  ami                    = "ami-052e6b9b2e1f0c8a4"
-  instance_type          = "t2.micro"
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
   key_name               = aws_key_pair.assignment_key.key_name
   vpc_security_group_ids = [aws_security_group.k3s_sg.id]
+
   tags = {
     Name = "k3s-worker"
     Role = "worker"
   }
 }
 
-# ECR Repo
+# ECR Repository
 resource "aws_ecr_repository" "app_repo" {
-  name = "springboot-app"
+  name = var.ecr_repo_name
 }
