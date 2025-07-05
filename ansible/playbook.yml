@@ -1,0 +1,10 @@
+---
+- name: Prepare K3s Control Plane
+  hosts: controlplane
+  roles:
+    - k3s_control_plane
+
+- name: Join Worker Nodes to K3s Cluster
+  hosts: workers
+  roles:
+    - k3s_agent

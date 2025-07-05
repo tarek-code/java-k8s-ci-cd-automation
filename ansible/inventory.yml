@@ -1,0 +1,21 @@
+all:
+  hosts:
+    control:
+      ansible_host: 192.168.1.3
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ~/.ssh/k3s-key
+      role: controlplane
+
+    worker:
+      ansible_host: 192.168.1.4
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ~/.ssh/k3s-key
+      role: worker
+
+  children:
+    controlplane:
+      hosts:
+        control:
+    workers:
+      hosts:
+        worker:

@@ -1,2 +1,1 @@
-# java-k8s-ci-cd-automation
-java-k8s-ci-cd-automation
+gitlap:  https://gitlab.com/tarek-code/java-k8s-ci-cd-automation

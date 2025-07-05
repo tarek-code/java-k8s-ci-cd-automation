@@ -1,0 +1,31 @@
+---
+- name: Install dependencies
+  become: true
+  apt:
+    name: curl
+    state: present
+    update_cache: yes
+
+- name: Install k3s server
+  become: true
+  shell: |
+    curl -sfL https://get.k3s.io | sh -
+  args:
+    creates: /etc/rancher/k3s/k3s.yaml
+
+- name: Enable kubectl for ubuntu user
+  become: true
+  shell: |
+    mkdir -p /home/ubuntu/.kube
+    cp /etc/rancher/k3s/k3s.yaml /home/ubuntu/.kube/config
+    chown -R ubuntu:ubuntu /home/ubuntu/.kube
+  when: ansible_user == "ubuntu"
+
+- name: Get node token
+  become: true
+  shell: cat /var/lib/rancher/k3s/server/node-token
+  register: node_token
+
+- name: Set fact for node_token
+  set_fact:
+    k3s_node_token: "{{ node_token.stdout }}"
